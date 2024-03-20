@@ -27,6 +27,22 @@ CREATE TABLE public.pontos (
    CONSTRAINT ponto_funcionarios_fk FOREIGN KEY (funcionario_id) REFERENCES public.funcionarios(id) 
 );
 
+CREATE TABLE public.perfis ( 
+   id int NOT NULL,    
+   nome varchar(20) NOT NULL,
+   CONSTRAINT perfil_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public.usuarios ( 
+   id uuid NOT NULL, 
+   login varchar(11) NOT NULL,    
+   senha varchar(248) NOT NULL,
+   perfil_id int NOT NULL,
+   ativo boolean NOT NULL,
+   CONSTRAINT usuarios_pkey PRIMARY KEY (id),
+   CONSTRAINT usuarios_perfis_fk FOREIGN KEY (perfil_id) REFERENCES public.perfis(id) 
+);
+
 CREATE TABLE public.lgpd_solicitacoes ( 
    id uuid NOT NULL, 
    nome varchar(100) NOT NULL, 
@@ -36,7 +52,7 @@ CREATE TABLE public.lgpd_solicitacoes (
    CONSTRAINT lgpd_solicitacoes_pkey PRIMARY KEY (id)
 );
 
-INSERT INTO public.ocupacoes (id,nome) VALUES
+INSERT INTO public.ocupacoes (id, nome) VALUES
 	('09f6a1c6-2fe3-4276-8014-b9595437e331','Gerente'),
 	('09f6a1c6-2fe3-4276-8014-b9595437e332','Supervisor'),
 	('09f6a1c6-2fe3-4276-8014-b9595437e333','Vendedor');
@@ -45,4 +61,8 @@ INSERT INTO public.funcionarios (id, nome, matricula, cpf, email, ocupacao_id) V
    ('6b4f3188-4536-4029-8033-3835c7437f31', 'Ana Maria', 'A000001', '28507433057', 'ana@empresa.com.br', '09f6a1c6-2fe3-4276-8014-b9595437e331'),
    ('6b4f3188-4536-4029-8033-3835c7437f32', 'Bruno Pereira', 'A000002', '06997172059', 'bruno@empresa.com.br', '09f6a1c6-2fe3-4276-8014-b9595437e332'),
    ('6b4f3188-4536-4029-8033-3835c7437f33', 'João Almeida', 'A000003', '02231416077', 'joao@empresa.com.br', '09f6a1c6-2fe3-4276-8014-b9595437e333');
+
+INSERT INTO public.perfis (id, nome) VALUES
+   (1, 'Administrador'),
+   (2, 'Colaborador');
 

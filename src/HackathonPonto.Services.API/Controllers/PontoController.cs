@@ -3,6 +3,7 @@ using HackathonPonto.Application.Interfaces;
 using HackathonPonto.Application.Services;
 using HackathonPonto.Application.ViewModels;
 using HackathonPonto.Services.Api.Controllers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -22,12 +23,15 @@ namespace HackathonPonto.Services.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrador,Colaborador")]
         [SwaggerOperation(
            Summary = "Registra o ponto.",
            Description = "Registra o ponto."
            )]
         [SwaggerResponse(201, "Success", typeof(PontoViewModel))]
         [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
         [SwaggerResponse(500, "Unexpected error")]
         public async Task<IActionResult> Add()
         {

@@ -1,7 +1,8 @@
 using System.Text;
 using System.Text.Json.Serialization;
-using Auth;
+using HackathonPonto.Application;
 using HackathonPonto.Services.Api.Configurations;
+using HackathonPonto.Services.API.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
@@ -17,7 +18,10 @@ builder.Configuration
 
 builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
-    
+
+// Swagger Config
+builder.Services.AddSwaggerConfiguration();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(s => {
@@ -52,7 +56,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Hackathon FIAP v1"));
 }
 
 app.UseHttpsRedirection();

@@ -10,8 +10,4 @@
 	  <ProjectReference Include="..\GenericPack\GenericPack.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Events\" />
-  </ItemGroup>
-
 </Project>

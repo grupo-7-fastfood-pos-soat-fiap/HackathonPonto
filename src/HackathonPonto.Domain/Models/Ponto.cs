@@ -12,7 +12,7 @@ namespace HackathonPonto.Domain.Models
         
         private Ponto()
         {
-
+            //Funcionario = new HashSet<Funcionario>();
         }
 
         public Ponto(Guid id, DateOnly data, TimeOnly hora, Guid funcionarioId, string tipoRegistro)
@@ -22,6 +22,10 @@ namespace HackathonPonto.Domain.Models
             Hora = hora;
             FuncionarioId = funcionarioId;
             TipoRegistro = tipoRegistro;
+
+            //Funcionario = new HashSet<Funcionario>();
         }
+
+        //public virtual ICollection<Funcionario> Funcionario { get; private set; }
     }
 }
