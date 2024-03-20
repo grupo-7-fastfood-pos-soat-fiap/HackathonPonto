@@ -1,6 +1,7 @@
 using AutoMapper;
 using HackathonPonto.Application.InputModels;
 using HackathonPonto.Domain.Commands.FuncionarioCommands;
+using HackathonPonto.Domain.Commands.PontoCommands;
 
 namespace HackathonPonto.Application.AutoMapper
 {
@@ -13,6 +14,9 @@ namespace HackathonPonto.Application.AutoMapper
             //Funcionario
             CreateMap<FuncionarioInputModel, FuncionarioCreateCommand>();
             CreateMap<FuncionarioInputModel, FuncionarioUpdateCommand>();
+
+            //Ponto
+            CreateMap<PontoInputModel, PontoCreateCommand>();
         }
     }
 }

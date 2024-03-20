@@ -1,6 +1,5 @@
 using HackathonPonto.Application.InputModels;
 using HackathonPonto.Application.Interfaces;
-using HackathonPonto.Application.Services;
 using HackathonPonto.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;

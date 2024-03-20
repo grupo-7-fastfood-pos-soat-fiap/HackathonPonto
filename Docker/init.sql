@@ -17,6 +17,16 @@ CREATE TABLE public.funcionarios (
    CONSTRAINT funcionarios_ocupacoes_fk FOREIGN KEY (ocupacao_id) REFERENCES public.ocupacoes(id) 
 );
 
+CREATE TABLE public.pontos ( 
+   id uuid NOT NULL, 
+   funcionario_id uuid NOT NULL,
+   data date NOT NULL,   
+   hora time NOT NULL,
+   tipoRegistro varchar(1) NOT NULL,
+   CONSTRAINT ponto_pkey PRIMARY KEY (id),
+   CONSTRAINT ponto_funcionarios_fk FOREIGN KEY (funcionario_id) REFERENCES public.funcionarios(id) 
+);
+
 CREATE TABLE public.lgpd_solicitacoes ( 
    id uuid NOT NULL, 
    nome varchar(100) NOT NULL, 
