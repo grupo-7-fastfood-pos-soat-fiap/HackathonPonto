@@ -16,6 +16,7 @@ namespace HackathonPonto.Infra.Data.Context
       
         public DbSet<Funcionario>? Funcionarios { get; set; }
         public DbSet<Ocupacao>? Ocupacoes { get; set; }
+        public DbSet<Ponto>? Pontos { get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options, IMediatorHandler mediatorHandler) :base(options)
         {
@@ -46,6 +47,7 @@ namespace HackathonPonto.Infra.Data.Context
             //Configura mapeamento
             modelBuilder.ApplyConfiguration(new FuncionariosMap());
             modelBuilder.ApplyConfiguration(new OcupacoesMap());
+            modelBuilder.ApplyConfiguration(new PontosMap());
 
             base.OnModelCreating(modelBuilder);
         }

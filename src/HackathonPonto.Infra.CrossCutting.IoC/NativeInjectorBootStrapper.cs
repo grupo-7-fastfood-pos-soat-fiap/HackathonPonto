@@ -14,6 +14,7 @@ using HackathonPonto.Application.AutoMapper;
 using HackathonPonto.Domain.Commands.FuncionarioCommands;
 using MediatR;
 using GenericPack.Messaging;
+using HackathonPonto.Domain.Commands.PontoCommands;
 
 namespace HackathonPonto.Infra.CrossCutting.IoC
 {
@@ -37,13 +38,14 @@ namespace HackathonPonto.Infra.CrossCutting.IoC
             services.AddScoped<IMediatorHandler, InMemoryBus>();
 
             // Application            
-            services.AddScoped<IFuncionarioApp, FuncionarioApp>();            
+            services.AddScoped<IFuncionarioApp, FuncionarioApp>();
+            services.AddScoped<IPontoApp, PontoApp>();
 
 
             // Infra - Data           
             services.AddScoped<IOcupacaoRepository, OcupacaoRepository>();
             services.AddScoped<IFuncionarioRepository, FuncionarioRepository>();
-
+            services.AddScoped<IPontoRepository, PontoRepository>();
 
             // AutoMapper Settings
             services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(InputModelToDomainMappingProfile));
@@ -51,8 +53,9 @@ namespace HackathonPonto.Infra.CrossCutting.IoC
             // Domain - Commands
             services.AddScoped<IRequestHandler<FuncionarioCreateCommand, CommandResult>, FuncionarioCommandHandler>();
             services.AddScoped<IRequestHandler<FuncionarioUpdateCommand, CommandResult>, FuncionarioCommandHandler>();
-            services.AddScoped<IRequestHandler<FuncionarioDeleteCommand, CommandResult>, FuncionarioCommandHandler>();            
+            services.AddScoped<IRequestHandler<FuncionarioDeleteCommand, CommandResult>, FuncionarioCommandHandler>();
 
+            services.AddScoped<IRequestHandler<PontoCreateCommand, CommandResult>, PontoCommandHandler>();
 
             // Domain - Events
             //services.AddScoped<INotificationHandler<AndamentoCreateEvent>, AndamentoEventHandler>();
