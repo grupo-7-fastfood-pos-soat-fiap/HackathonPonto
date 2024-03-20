@@ -1,0 +1,31 @@
+version: "3.4"
+services:  
+  hackathonpostgres-svc:
+    container_name: postgres-hackathon
+    restart: always
+    build:
+      context: ./Docker
+      dockerfile: db.Dockerfile
+    volumes:
+      - ./var:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: hackathon
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+  hackathonapi:
+    container_name: hackathon-fiap
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on: 
+      - hackathonpostgres-svc
+    ports:
+      - 8000:80
+      - 8001:443
+    restart: always
+    environment: 
+      - DBHOST=hackathonpostgres-svc
