@@ -15,6 +15,7 @@ using HackathonPonto.Domain.Commands.FuncionarioCommands;
 using MediatR;
 using GenericPack.Messaging;
 using HackathonPonto.Domain.Commands.PontoCommands;
+using HackathonPonto.Domain.Events.UsuarioEvents;
 
 namespace HackathonPonto.Infra.CrossCutting.IoC
 {
@@ -40,12 +41,14 @@ namespace HackathonPonto.Infra.CrossCutting.IoC
             // Application            
             services.AddScoped<IFuncionarioApp, FuncionarioApp>();
             services.AddScoped<IPontoApp, PontoApp>();
+            services.AddScoped<ILoginApp, LoginApp>();
 
 
             // Infra - Data           
             services.AddScoped<IOcupacaoRepository, OcupacaoRepository>();
             services.AddScoped<IFuncionarioRepository, FuncionarioRepository>();
             services.AddScoped<IPontoRepository, PontoRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
             // AutoMapper Settings
             services.AddAutoMapper(typeof(DomainToViewModelMappingProfile), typeof(InputModelToDomainMappingProfile));
@@ -58,20 +61,8 @@ namespace HackathonPonto.Infra.CrossCutting.IoC
             services.AddScoped<IRequestHandler<PontoCreateCommand, CommandResult>, PontoCommandHandler>();
 
             // Domain - Events
-            //services.AddScoped<INotificationHandler<AndamentoCreateEvent>, AndamentoEventHandler>();
+            services.AddScoped<INotificationHandler<UsuarioCreateEvent>, UsuarioEventHandler>();
 
-            //Infra - Services
-            //services.AddScoped<IProxyProducao, ProducaoService>();
-
-            //Gateway de Pagamento
-            //services.AddHttpClient<IProxyProducao, ProducaoService>(
-            //client =>
-            //{
-            //    // Set the base address of the named client.
-            //    //var host = configuration.GetSection("ProxyProducao").Value;
-
-            //    client.BaseAddress = new Uri("https://localhost:7035/");
-            //});
         }
     }
 }

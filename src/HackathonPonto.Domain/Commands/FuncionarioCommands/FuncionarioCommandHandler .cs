@@ -3,6 +3,7 @@ using HackathonPonto.Domain.Models;
 using FluentValidation.Results;
 using GenericPack.Messaging;
 using MediatR;
+using HackathonPonto.Domain.Events.UsuarioEvents;
 
 namespace HackathonPonto.Domain.Commands.FuncionarioCommands
 {
@@ -20,10 +21,19 @@ namespace HackathonPonto.Domain.Commands.FuncionarioCommands
 
         public async Task<CommandResult> Handle(FuncionarioCreateCommand request, CancellationToken cancellationToken)
         {
-            if (!request.IsValid()) return request.CommandResult;            
-            
-            var funcionario = new Funcionario(Guid.NewGuid(), request.Nome, request.Matricula, request.Email, request.Cpf, request.OcupacaoId);            
-            
+            if (!request.IsValid()) return request.CommandResult;
+
+            var funcionarioExiste = await _repository.GetByCpf(request.Cpf);
+            if (funcionarioExiste is not null)
+            {
+                AddError("Já existe um funcionário com este CPF.");
+                return CommandResult;
+            }
+
+            var funcionario = new Funcionario(Guid.NewGuid(), request.Nome, request.Matricula, request.Email, request.Cpf, request.OcupacaoId);
+
+            funcionario.AddDomainEvent(new UsuarioCreateEvent(funcionario.Cpf));
+
             _repository.Add(funcionario);            
 
             return await Commit(_repository.UnitOfWork, funcionario.Id);

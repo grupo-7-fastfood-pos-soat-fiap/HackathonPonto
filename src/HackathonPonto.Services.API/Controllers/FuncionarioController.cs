@@ -1,12 +1,14 @@
 using HackathonPonto.Application.InputModels;
 using HackathonPonto.Application.Interfaces;
 using HackathonPonto.Application.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace HackathonPonto.Services.Api.Controllers
 {
     [ApiController]
+    [Authorize(Roles = "Administrador")]
     [Route("api/funcionario")]
     [Produces("application/json")]
     [Consumes("application/json")]
@@ -27,6 +29,8 @@ namespace HackathonPonto.Services.Api.Controllers
         [SwaggerResponse(200, "Success", typeof(List<FuncionarioViewModel>))]
         [SwaggerResponse(204, "No Content")]
         [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
         [SwaggerResponse(500, "Unexpected error")]
         public async Task<ActionResult> GetAll()
         {
@@ -48,6 +52,8 @@ namespace HackathonPonto.Services.Api.Controllers
        )]
         [SwaggerResponse(201, "Success", typeof(FuncionarioViewModel))]
         [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
         [SwaggerResponse(500, "Unexpected error")]
         public async Task<IActionResult> Add([FromBody] FuncionarioInputModel funcionario)
         {
@@ -76,6 +82,8 @@ namespace HackathonPonto.Services.Api.Controllers
         [SwaggerResponse(200, "Success", typeof(FuncionarioViewModel))]
         [SwaggerResponse(204, "No Content")]
         [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
         [SwaggerResponse(500, "Unexpected error")]
         public async Task<IActionResult> GetById([FromRoute] Guid id)
         {
@@ -97,6 +105,8 @@ namespace HackathonPonto.Services.Api.Controllers
         [SwaggerResponse(200, "Success", typeof(FuncionarioViewModel))]
         [SwaggerResponse(204, "No Content")]
         [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
         [SwaggerResponse(500, "Unexpected error")]
         public async Task<IActionResult> GetByCpf([FromRoute] string cpf)
         {
@@ -117,7 +127,9 @@ namespace HackathonPonto.Services.Api.Controllers
         )]
         [SwaggerResponse(200, "Success", typeof(FuncionarioViewModel))]
         [SwaggerResponse(204, "No Content")]
-        [SwaggerResponse(400, "Bad Request")]        
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
         [SwaggerResponse(500, "Unexpected error")]
         public async Task<IActionResult> GetByEmail([FromRoute] string email)
         {
@@ -138,6 +150,8 @@ namespace HackathonPonto.Services.Api.Controllers
         )]
         [SwaggerResponse(204, "Success")]
         [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
         [SwaggerResponse(500, "Unexpected error")]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] FuncionarioInputModel funcionario)
         {
@@ -162,6 +176,8 @@ namespace HackathonPonto.Services.Api.Controllers
         )]
         [SwaggerResponse(204, "Success")]
         [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
         [SwaggerResponse(404, "Not Found")]
         [SwaggerResponse(500, "Unexpected error")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)

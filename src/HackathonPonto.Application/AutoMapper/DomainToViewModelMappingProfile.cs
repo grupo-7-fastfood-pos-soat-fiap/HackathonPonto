@@ -18,6 +18,12 @@ namespace HackathonPonto.Application.AutoMapper
 
             CreateMap<Ponto, PontoViewModel>();
 
+            CreateMap<Perfil, PerfilViewModel>();
+
+            CreateMap<Usuario, UsuarioViewModel>()
+                .ForMember(c => c.Perfil,
+                    map => map.MapFrom(m => m.PerfilNavegation)); ;
+
         }
     }
 }

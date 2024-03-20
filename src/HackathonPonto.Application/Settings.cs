@@ -1,4 +1,4 @@
-﻿namespace Auth;
+﻿namespace HackathonPonto.Application;
 
 public static class Settings
 {
