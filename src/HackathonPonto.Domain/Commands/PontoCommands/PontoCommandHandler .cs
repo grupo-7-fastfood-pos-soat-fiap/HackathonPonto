@@ -1,6 +1,5 @@
 using HackathonPonto.Domain.Interfaces;
 using HackathonPonto.Domain.Models;
-using FluentValidation.Results;
 using GenericPack.Messaging;
 using MediatR;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
