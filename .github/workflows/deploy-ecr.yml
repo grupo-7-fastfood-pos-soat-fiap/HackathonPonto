@@ -1,0 +1,59 @@
+name: Deploy API image to Amazon ECR
+
+on:
+  push:
+    branches:
+      - main  
+
+env:
+  AWS_REGION: us-east-1
+  API_ECR_REPOSITORY: hackathon
+
+permissions:
+      id-token: write
+      contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Restore, build and teste API
+      run: |
+        dotnet restore
+        dotnet build --no-restore
+        dotnet test --no-build --verbosity normal
+        
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
+        with:
+          role-to-assume: arn:aws:iam::235145177657:role/testeRole
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
+
+      - name: Run Docker build, tag and push
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }} 
+        run: |
+          docker build -t $ECR_REGISTRY/$API_ECR_REPOSITORY:latest .
+          docker push $ECR_REGISTRY/$API_ECR_REPOSITORY:latest
+          echo "image=$ECR_REGISTRY/$API_ECR_REPOSITORY:latest" >> $GITHUB_OUTPUT
