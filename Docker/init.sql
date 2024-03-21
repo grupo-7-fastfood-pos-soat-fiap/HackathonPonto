@@ -66,3 +66,8 @@ INSERT INTO public.perfis (id, nome) VALUES
    (1, 'Administrador'),
    (2, 'Colaborador');
 
+INSERT INTO public.usuarios (id, login, senha, perfil_id, ativo) VALUES
+   ('6b4f3188-4536-4029-8033-3835c7437f41', '28507433057', 'W3PD19wro3gdmSCWUcWoKOcXJWA=', 1, true),
+   ('6b4f3188-4536-4029-8033-3835c7437f42', '06997172059', 'W3PD19wro3gdmSCWUcWoKOcXJWA=', 2, true),
+   ('6b4f3188-4536-4029-8033-3835c7437f43', '02231416077', 'W3PD19wro3gdmSCWUcWoKOcXJWA=', 2, false);
+

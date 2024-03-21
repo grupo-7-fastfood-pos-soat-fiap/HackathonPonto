@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using GenericPack.Mediator;
+using GenericPack.Tools;
 using HackathonPonto.Application.InputModels;
 using HackathonPonto.Application.Interfaces;
 using HackathonPonto.Application.ViewModels;
@@ -28,14 +29,15 @@ namespace HackathonPonto.Application.Services
 
         public async Task<TokenViewModel> Autenticar(UsuarioInputModel usuario)
         {
-            var usarioLogado = _mapper.Map<UsuarioViewModel>(await _usuarioRepository.GetByLogin(usuario.login));
+            var usuarioLogado = _mapper.Map<UsuarioViewModel>(await _usuarioRepository.GetByLogin(usuario.login));
 
             TokenViewModel result = new TokenViewModel();
+            
 
-            if (usarioLogado == null || usarioLogado.Senha != usuario.senha)
+            if (usuarioLogado == null || !usuarioLogado.Ativo || !Criptografia.CheckPassword(usuario.senha, usuarioLogado.Senha))
                 return result;
 
-            result.Token = "Bearer " + TokenService.GenerateToken(usarioLogado.Login, usarioLogado.Perfil.Nome);
+            result.Token = "Bearer " + TokenService.GenerateToken(usuarioLogado.Login, usuarioLogado.Perfil.Nome);
 
             return result;
                        

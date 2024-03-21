@@ -1,4 +1,5 @@
 ﻿using GenericPack.Messaging;
+using GenericPack.Tools;
 using HackathonPonto.Domain.Models;
 
 namespace HackathonPonto.Domain.Events.UsuarioEvents
@@ -19,8 +20,8 @@ namespace HackathonPonto.Domain.Events.UsuarioEvents
         public UsuarioCreateEvent(string login)
         {
             Login = login;
-            Senha = "1234";
-            PerfilId = 2;
+            Senha = Criptografia.EncodePassword("1234");
+            PerfilId = (int)Models.Enums.Perfil.Colaborador;
             Ativo = true;
         }
     }

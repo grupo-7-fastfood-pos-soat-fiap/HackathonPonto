@@ -12,13 +12,13 @@ namespace HackathonPonto.Services.Api.Controllers
     [Route("api/funcionario")]
     [Produces("application/json")]
     [Consumes("application/json")]
-    public class FuncionarioController: ApiController
+    public class FuncionarioController : ApiController
     {
-        private readonly IFuncionarioApp _funcionarioApp;        
+        private readonly IFuncionarioApp _funcionarioApp;
 
         public FuncionarioController(IFuncionarioApp funcionarioApp)
         {
-            _funcionarioApp = funcionarioApp;            
+            _funcionarioApp = funcionarioApp;
         }
 
         [HttpGet]
