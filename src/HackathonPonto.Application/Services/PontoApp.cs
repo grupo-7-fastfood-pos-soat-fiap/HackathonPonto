@@ -8,6 +8,7 @@ using HackathonPonto.Domain.Commands.FuncionarioCommands;
 using HackathonPonto.Domain.Commands.PontoCommands;
 using HackathonPonto.Domain.Interfaces;
 using HackathonPonto.Infra.Data.Repository;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HackathonPonto.Application.Services
 {
@@ -27,16 +28,15 @@ namespace HackathonPonto.Application.Services
         }
         public async Task<CommandResult> Add(string cpf)
         {
-            //#####################################################
-            //TODO: Inserir regras de negócio
-            //#####################################################
-            var funcionario = _mapper.Map<FuncionarioViewModel>(_funcionarioRepository.GetByCpf(cpf));
             
+            var funcionario = _mapper.Map<FuncionarioViewModel>(await _funcionarioRepository.GetByCpf(cpf));
+            DateTime dataUnica = DateTime.Now;            
+
             PontoInputModel model = new PontoInputModel();
             model.FuncionarioId = funcionario.Id;
-            model.Data= DateOnly.FromDateTime(DateTime.Now);
-            model.Hora= TimeOnly.FromDateTime(DateTime.Now);
-            model.TipoRegistro = "E";
+            model.Data= DateOnly.FromDateTime(dataUnica);
+            model.Hora= TimeOnly.FromDateTime(dataUnica);
+            model.TipoRegistro = "";
 
             var command = _mapper.Map<PontoCreateCommand>(model);
             return await _mediator.SendCommand(command);
@@ -50,6 +50,15 @@ namespace HackathonPonto.Application.Services
         {
             GC.SuppressFinalize(this);
         }
-  
-    }
+
+        public async Task<dynamic> GetDayByUser(DateOnly data, string cpf)
+        {
+            return await _pontoRepository.GetDayByUser(data, cpf);
+        }
+
+        public async Task<dynamic> GetMonthYearByUser(int mes, int ano, string cpf)
+        {
+            return await _pontoRepository.GetMonthYearByUser(mes, ano, cpf);
+        }
+    }    
 }

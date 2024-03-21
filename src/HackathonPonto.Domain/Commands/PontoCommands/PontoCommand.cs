@@ -10,5 +10,10 @@ namespace HackathonPonto.Domain.Commands.PontoCommands
         public Guid FuncionarioId { get; protected set; }
         public string TipoRegistro { get; protected set; } = string.Empty;
 
+        public void SetTipoRegistro(string tipoRegistro)
+        {
+            TipoRegistro = tipoRegistro;
+        }
+
     }
 }
