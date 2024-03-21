@@ -8,5 +8,7 @@ namespace HackathonPonto.Application.Interfaces
     {
         Task<CommandResult> Add(string cpf);
         Task<PontoViewModel> GetById(Guid id);
+        Task<dynamic> GetDayByUser(DateOnly data, string cpf);
+        Task<dynamic> GetMonthYearByUser(int mes, int ano, string cpf);
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace HackathonPonto.Services.API.Controllers
 {
@@ -41,7 +42,7 @@ namespace HackathonPonto.Services.API.Controllers
                 var claimsIdentity = User.Identity as ClaimsIdentity;
                 var cpf = claimsIdentity?.Claims.FirstOrDefault(x => x.Type == "Cpf");
 
-                if (cpf == null || cpf == null)
+                if (cpf == null)
                     return StatusCode(StatusCodes.Status401Unauthorized);   
 
                 var result = await _pontoApp.Add(cpf.Value);
@@ -50,6 +51,86 @@ namespace HackathonPonto.Services.API.Controllers
                     return CustomResponse(await _pontoApp.GetById((Guid)result.Id));
                 else
                     return CustomCreateResponse(result);
+            }
+            catch (Exception e)
+            {
+                return Problem("Há um problema com a sua requisição - " + e.Message);
+            }
+        }
+
+        [HttpGet("{cpf}/ano/{ano}/mes/{mes}/dia/{dia}")]
+        [Authorize(Roles = "Administrador,Colaborador")]
+        [SwaggerOperation(
+        Summary = "Ponto diário por funcionário.",
+        Description = "Ponto diário por funcionário. Usuário 'Colaborador' visualiza apenas o seu registro de ponto."
+        )]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(204, "No Content")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
+        [SwaggerResponse(500, "Unexpected error")]
+        public async Task<IActionResult> GetDayByUser([FromRoute] string cpf,int ano, int mes, int dia)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return CustomResponse(ModelState);
+
+                if (DateOnly.TryParse($"{ano}-{mes}-{dia}", out DateOnly data))
+                {
+
+                    var claimsIdentity = User.Identity as ClaimsIdentity;
+                    var cpfLogado = claimsIdentity?.Claims.FirstOrDefault(x => x.Type == "Cpf");
+                    var perfilLogado = claimsIdentity?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role);
+
+                    if (cpfLogado == null)
+                        return StatusCode(StatusCodes.Status401Unauthorized);
+
+                    if (perfilLogado!.Value == "Colaborador" && cpfLogado.Value != cpf)
+                        return StatusCode(StatusCodes.Status403Forbidden);
+
+                    return CustomResponse(await _pontoApp.GetDayByUser(data, cpf));
+                }
+
+                return BadRequest(ModelState);
+            }
+            catch (Exception e)
+            {
+                return Problem("Há um problema com a sua requisição - " + e.Message);
+            }
+        }
+
+        [HttpGet("{cpf}/ano/{ano}/mes/{mes}")]
+        [Authorize(Roles = "Administrador,Colaborador")]
+        [SwaggerOperation(
+        Summary = "Ponto mensal por funcionário.",
+        Description = "Ponto mensal por funcionário. Usuário 'Colaborador' visualiza apenas o seu registro de ponto."
+        )]
+        [SwaggerResponse(200, "Success")]
+        [SwaggerResponse(204, "No Content")]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
+        [SwaggerResponse(500, "Unexpected error")]
+        public async Task<IActionResult> GetMonthYearByUser([FromRoute] string cpf, int ano, int mes)
+        {
+            try
+            {
+                if (!DateOnly.TryParse($"{ano}-{mes}-01", out DateOnly data))
+                    return BadRequest(ModelState);
+
+                var claimsIdentity = User.Identity as ClaimsIdentity;
+                var cpfLogado = claimsIdentity?.Claims.FirstOrDefault(x => x.Type == "Cpf");
+                var perfilLogado = claimsIdentity?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role);
+
+                if (cpfLogado == null)
+                    return StatusCode(StatusCodes.Status401Unauthorized);
+
+                if (perfilLogado!.Value == "Colaborador" && cpfLogado.Value != cpf)
+                    return StatusCode(StatusCodes.Status403Forbidden);
+
+                return CustomResponse(await _pontoApp.GetMonthYearByUser(mes, ano, cpf));
             }
             catch (Exception e)
             {
