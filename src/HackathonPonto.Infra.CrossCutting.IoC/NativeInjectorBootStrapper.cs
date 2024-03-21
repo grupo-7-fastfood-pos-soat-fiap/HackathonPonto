@@ -42,7 +42,8 @@ namespace HackathonPonto.Infra.CrossCutting.IoC
             services.AddScoped<IFuncionarioApp, FuncionarioApp>();
             services.AddScoped<IPontoApp, PontoApp>();
             services.AddScoped<ILoginApp, LoginApp>();
-
+            services.AddScoped<IOcupacaoApp, OcupacaoApp>();
+            services.AddScoped<IUsuarioApp, UsuarioApp>();
 
             // Infra - Data           
             services.AddScoped<IOcupacaoRepository, OcupacaoRepository>();

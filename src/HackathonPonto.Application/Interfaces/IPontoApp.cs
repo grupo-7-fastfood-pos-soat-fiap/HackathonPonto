@@ -6,7 +6,7 @@ namespace HackathonPonto.Application.Interfaces
 {
     public interface IPontoApp : IDisposable
     {
-        Task<CommandResult> Add(Guid funcionarioId);
+        Task<CommandResult> Add(string cpf);
         Task<PontoViewModel> GetById(Guid id);
     }
 }

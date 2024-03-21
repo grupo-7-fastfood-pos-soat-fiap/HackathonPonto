@@ -26,7 +26,8 @@ namespace HackathonPonto.Services.API.Controllers
            Description = "Obter o token de autenticação (JWT)."
            )]
         [SwaggerResponse(201, "Success", typeof(TokenViewModel))]
-        [SwaggerResponse(400, "Bad Request")]        
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
         [SwaggerResponse(500, "Unexpected error")]
         public async Task<IActionResult> Authenticate([FromBody] UsuarioInputModel usuario)
         {
@@ -36,8 +37,10 @@ namespace HackathonPonto.Services.API.Controllers
                     return CustomResponse(ModelState);
 
                 var result = await _loginoApp.Autenticar(usuario);
-                
-                return CustomCreateResponse(result);
+                if (result == null || result.Token == string.Empty)
+                    return StatusCode(StatusCodes.Status401Unauthorized);
+                else
+                    return CustomCreateResponse(result);
             }
             catch (Exception e)
             {

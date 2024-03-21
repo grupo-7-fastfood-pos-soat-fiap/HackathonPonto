@@ -6,6 +6,7 @@ using HackathonPonto.Services.Api.Controllers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Security.Claims;
 
 namespace HackathonPonto.Services.API.Controllers
 {
@@ -37,12 +38,13 @@ namespace HackathonPonto.Services.API.Controllers
         {
             try
             {
-                //PontoInputModel ponto = new PontoInputModel();
+                var claimsIdentity = User.Identity as ClaimsIdentity;
+                var cpf = claimsIdentity?.Claims.FirstOrDefault(x => x.Type == "Cpf");
 
-                //#################################################
-                //TODO: Obter do Token
-                //#################################################
-                var result = await _pontoApp.Add(Guid.Parse("6b4f3188-4536-4029-8033-3835c7437f31"));
+                if (cpf == null || cpf == null)
+                    return StatusCode(StatusCodes.Status401Unauthorized);   
+
+                var result = await _pontoApp.Add(cpf.Value);
 
                 if (result.Id != null)
                     return CustomResponse(await _pontoApp.GetById((Guid)result.Id));

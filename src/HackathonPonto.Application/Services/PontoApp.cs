@@ -14,23 +14,26 @@ namespace HackathonPonto.Application.Services
     public class PontoApp : IPontoApp
     {
         private readonly IPontoRepository _pontoRepository;
+        private readonly IFuncionarioRepository _funcionarioRepository;
         private readonly IMapper _mapper;
         private readonly IMediatorHandler _mediator;
 
-        public PontoApp(IPontoRepository pontoRepository, IMediatorHandler mediator, IMapper mapper)
+        public PontoApp(IPontoRepository pontoRepository, IFuncionarioRepository funcionarioRepository, IMediatorHandler mediator, IMapper mapper)
         {
             _pontoRepository = pontoRepository;
+            _funcionarioRepository = funcionarioRepository;
             _mediator = mediator;
             _mapper = mapper;
         }
-        public async Task<CommandResult> Add(Guid funcionarioId)
+        public async Task<CommandResult> Add(string cpf)
         {
             //#####################################################
             //TODO: Inserir regras de negócio
             //#####################################################
-
+            var funcionario = _mapper.Map<FuncionarioViewModel>(_funcionarioRepository.GetByCpf(cpf));
+            
             PontoInputModel model = new PontoInputModel();
-            model.FuncionarioId = funcionarioId;
+            model.FuncionarioId = funcionario.Id;
             model.Data= DateOnly.FromDateTime(DateTime.Now);
             model.Hora= TimeOnly.FromDateTime(DateTime.Now);
             model.TipoRegistro = "E";
