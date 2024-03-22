@@ -58,9 +58,9 @@ INSERT INTO public.ocupacoes (id, nome) VALUES
 	('09f6a1c6-2fe3-4276-8014-b9595437e333','Vendedor');
 
 INSERT INTO public.funcionarios (id, nome, matricula, cpf, email, ocupacao_id) VALUES 
-   ('6b4f3188-4536-4029-8033-3835c7437f31', 'Ana Maria', 'A000001', '28507433057', 'ana@empresa.com.br', '09f6a1c6-2fe3-4276-8014-b9595437e331'),
-   ('6b4f3188-4536-4029-8033-3835c7437f32', 'Bruno Pereira', 'A000002', '06997172059', 'bruno@empresa.com.br', '09f6a1c6-2fe3-4276-8014-b9595437e332'),
-   ('6b4f3188-4536-4029-8033-3835c7437f33', 'João Almeida', 'A000003', '02231416077', 'joao@empresa.com.br', '09f6a1c6-2fe3-4276-8014-b9595437e333');
+   ('6b4f3188-4536-4029-8033-3835c7437f31', 'Ana Maria', 'A000001', '28507433057', 'rm350055@fiap.com.br', '09f6a1c6-2fe3-4276-8014-b9595437e331'),
+   ('6b4f3188-4536-4029-8033-3835c7437f32', 'Bruno Pereira', 'A000002', '06997172059', 'rm350055@fiap.com.br', '09f6a1c6-2fe3-4276-8014-b9595437e332'),
+   ('6b4f3188-4536-4029-8033-3835c7437f33', 'João Almeida', 'A000003', '02231416077', 'rm350055@fiap.com.br', '09f6a1c6-2fe3-4276-8014-b9595437e333');
 
 INSERT INTO public.perfis (id, nome) VALUES
    (1, 'Administrador'),
@@ -69,7 +69,7 @@ INSERT INTO public.perfis (id, nome) VALUES
 INSERT INTO public.usuarios (id, login, senha, perfil_id, ativo) VALUES
    ('6b4f3188-4536-4029-8033-3835c7437f41', '28507433057', 'W3PD19wro3gdmSCWUcWoKOcXJWA=', 1, true),
    ('6b4f3188-4536-4029-8033-3835c7437f42', '06997172059', 'W3PD19wro3gdmSCWUcWoKOcXJWA=', 2, true),
-   ('6b4f3188-4536-4029-8033-3835c7437f43', '02231416077', 'W3PD19wro3gdmSCWUcWoKOcXJWA=', 2, false);
+   ('6b4f3188-4536-4029-8033-3835c7437f43', '02231416077', 'W3PD19wro3gdmSCWUcWoKOcXJWA=', 2, true);
 
 INSERT INTO public.pontos (id, funcionario_id, "data", hora, tiporegistro)
 VALUES('d6d9a614-6e4a-470e-abdf-4621da0003e9'::uuid, '6b4f3188-4536-4029-8033-3835c7437f32'::uuid, '2024-02-01', '08:00:22', 'E1'),
