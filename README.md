@@ -34,22 +34,22 @@ Este projeto consiste um sistema de ponto eletrônico, seguindo os seguintes req
 
 >***OBS.:** Um usuário com o perfil COLABORADOR pode consultar apenas os seus próprios lançamentos.*
 
-![API Ponto diário](docs\api-ponto-dia.png)
+![API Ponto diário](./docs/api-ponto-dia.png)
 
 4. **Relatórios**: O sistema deve ser capaz de gerar o espelho de ponto mensal com base nos registros de ponto do mês fechado (anterior) e
 enviar esse relatório por e-mail ao solicitante. (Listagem das datas, batimentos de ponto e total de horas trabalhadas)
 
 >**SOLUÇÃO**: *O sistema permite a consulta mensal diretamente pela API **GET /api/ponto/{cpf}/ano/{ano}/mes/{mes}** ou solicitando o envio do relatório pela API **POST /api/ponto/**.*
 
-![API Ponto mensal](docs\api-ponto-mensal.png)
+![API Ponto mensal](./docs/api-ponto-mensal.png)
 
-![API Ponto relatório](docs\api-ponto-relatorio.png)
+![API Ponto relatório](./docs/api-ponto-relatorio.png)
 
 5. **Segurança**: O sistema deve garantir que os dados dos usuários sejam armazenados de forma segura e que a privacidade seja mantida.
 
 >**SOLUÇÃO**: *Todas as API's, com exceção do login, requerem que o usuário esteja autenticado. A identificação do perfil do usuário está registrado no JWT, usuários com o perfil COLABORADOR podem acessar apenas os seus próprios lançamentos.*
 
-![JWT exemplo](docs\jwt.png)
+![JWT exemplo](./docs/jwt.png)
 
 6. **Disponibilidade**: O sistema deve estar disponível 24/7 para permitir que os usuários registrem seu ponto a qualquer momento, e o tempo de resposta dos serviços de marcação de ponto deve ser de até 5 segundos.
 
@@ -59,7 +59,7 @@ enviar esse relatório por e-mail ao solicitante. (Listagem das datas, batimento
 
 ### Desenho da solução MVP
 
-![ASIS MVP](docs/AWS_ASIS.drawio.png)
+![ASIS MVP](./docs/AWS_ASIS.drawio.png)
 
 ### Desenho da solução evolutiva (fase 2)
 
