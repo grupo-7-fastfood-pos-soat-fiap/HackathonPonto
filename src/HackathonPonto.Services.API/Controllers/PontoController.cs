@@ -137,5 +137,43 @@ namespace HackathonPonto.Services.API.Controllers
                 return Problem("Há um problema com a sua requisição - " + e.Message);
             }
         }
+
+        [HttpPost("{cpf}/ano/{ano}/mes/{mes}")]
+        [Authorize(Roles = "Administrador,Colaborador")]
+        [SwaggerOperation(
+           Summary = "Solicita relatório de ponto.",
+           Description = "Solicita relatório de ponto."
+           )]
+        [SwaggerResponse(201, "Success", typeof(PontoViewModel))]
+        [SwaggerResponse(400, "Bad Request")]
+        [SwaggerResponse(401, "Unauthorized")]
+        [SwaggerResponse(403, "Forbidden")]
+        [SwaggerResponse(500, "Unexpected error")]
+        public async Task<IActionResult> SolicitaRelatorio([FromRoute] string cpf, int ano, int mes)
+        {
+            try
+            {
+                if (!DateOnly.TryParse($"{ano}-{mes}-01", out DateOnly data))
+                    return BadRequest(ModelState);
+
+                var claimsIdentity = User.Identity as ClaimsIdentity;
+                var cpfLogado = claimsIdentity?.Claims.FirstOrDefault(x => x.Type == "Cpf");
+                var perfilLogado = claimsIdentity?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role);
+
+                if (cpfLogado == null)
+                    return StatusCode(StatusCodes.Status401Unauthorized);
+
+                if (perfilLogado!.Value == "Colaborador" && cpfLogado.Value != cpf)
+                    return StatusCode(StatusCodes.Status403Forbidden);
+
+                _pontoApp.SendReportAsync(mes, ano, cpf);
+
+                return Ok("Seu relatório foi solicitado, verifique seu e-mail.");
+            }
+            catch (Exception e)
+            {
+                return Problem("Há um problema com a sua requisição - " + e.Message);
+            }
+        }
     }
 }

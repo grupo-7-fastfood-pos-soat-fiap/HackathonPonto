@@ -16,6 +16,7 @@ using MediatR;
 using GenericPack.Messaging;
 using HackathonPonto.Domain.Commands.PontoCommands;
 using HackathonPonto.Domain.Events.UsuarioEvents;
+using HackathonPonto.Services.Report;
 
 namespace HackathonPonto.Infra.CrossCutting.IoC
 {
@@ -44,6 +45,7 @@ namespace HackathonPonto.Infra.CrossCutting.IoC
             services.AddScoped<ILoginApp, LoginApp>();
             services.AddScoped<IOcupacaoApp, OcupacaoApp>();
             services.AddScoped<IUsuarioApp, UsuarioApp>();
+            services.AddScoped<IReportService, PdfReport>();
 
             // Infra - Data           
             services.AddScoped<IOcupacaoRepository, OcupacaoRepository>();
