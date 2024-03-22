@@ -12,6 +12,6 @@ namespace HackathonPonto.Application.Interfaces
         Task<dynamic> GetDayByUser(DateOnly data, string cpf);
         Task<dynamic> GetMonthYearByUser(int mes, int ano, string cpf);
 
-        void SendReportAsync(int mes, int ano, string cpf);
+        Task SendReportAsync(int mes, int ano, string cpf);
     }
 }

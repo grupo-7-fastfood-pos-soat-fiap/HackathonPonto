@@ -12,16 +12,56 @@
    * [Desenvolvedores <img class="emoji" title=":octocat:" alt=":octocat:" src="https://github.githubassets.com/images/icons/emoji/octocat.png" height="20" width="20" align="absmiddle">](#desenvolvedores-octocat)
 
 ## O projeto
+
 Este projeto consiste um sistema de ponto eletrônico, seguindo os seguintes requisitos funcionais:
-1. Autenticação de Usuário: O sistema deve permitir que os usuários se autentiquem usando um nome de usuário ou matrícula e senha.
-2. Registro de Ponto: O sistema deve permitir que os usuários registrem o horário de entrada, intervalos e saída do trabalho. Isso deve incluir a data e a hora exatas do registro. O usuário apenas registra o evento, e o sistema obtém o horário do momento do registro.
-3. Visualização de Registros: O sistema deve permitir que os usuários visualizem seus registros de ponto. Isso deve incluir todos os detalhes, como data, hora de entrada, intervalos e saída, e total de horas trabalhadas no dia.
-4. Relatórios: O sistema deve ser capaz de gerar o espelho de ponto mensal com base nos registros de ponto do mês fechado (anterior) e
+
+1. **Autenticação de Usuário**: O sistema deve permitir que os usuários se autentiquem usando um nome de usuário ou matrícula e senha.
+
+>**SOLUÇÃO**: *Ao cadastrar um Funcionário é disparado um evento para criação do seu Usuário no sistema com o perfil COLABORADOR. O LOGIN é o CPF do funcionário e a SENHA INICIAL é **1234** (para facilitar os testes e demonstrações).*
+
+2. **Registro de Ponto**: O sistema deve permitir que os usuários registrem o horário de entrada, intervalos e saída do trabalho. Isso deve incluir a data e a hora exatas do registro. O usuário apenas registra o evento, e o sistema obtém o horário do momento do registro.
+
+>**SOLUÇÃO**: *A API de registro do ponto exige apenas que o usuário esteja logado, o sistema permite até 4 registros de ponto por dia, sendo:*
+>
+   >* *E1: Entrada 1 (primeiro registro do dia);*
+   >* *S1: Saída 1;*
+   >* *E2: Entrada 2;*
+   >* *S2: Saída 2.*
+
+3. **Visualização de Registros**: O sistema deve permitir que os usuários visualizem seus registros de ponto. Isso deve incluir todos os detalhes, como data, hora de entrada, intervalos e saída, e total de horas trabalhadas no dia.
+
+>**SOLUÇÃO**: *Um usuário logado pode consultar os lançamentos de pontos diretamente pela API de consulta do ponto diário **GET /api/ponto/{cpf}/ano/{ano}/mes/{mes}/dia/{dia}***
+
+>***OBS.:** Um usuário com o perfil COLABORADOR pode consultar apenas os seus próprios lançamentos.*
+
+![API Ponto diário](docs\api-ponto-dia.png)
+
+4. **Relatórios**: O sistema deve ser capaz de gerar o espelho de ponto mensal com base nos registros de ponto do mês fechado (anterior) e
 enviar esse relatório por e-mail ao solicitante. (Listagem das datas, batimentos de ponto e total de horas trabalhadas)
-5. Segurança: O sistema deve garantir que os dados dos usuários sejam armazenados de forma segura e que a privacidade seja mantida.
-6. Disponibilidade: O sistema deve estar disponível 24/7 para permitir que os usuários registrem seu ponto a qualquer momento, e o tempo de resposta dos serviços de marcação de ponto deve ser de até 5 segundos.
+
+>**SOLUÇÃO**: *O sistema permite a consulta mensal diretamente pela API **GET /api/ponto/{cpf}/ano/{ano}/mes/{mes}** ou solicitando o envio do relatório pela API **POST /api/ponto/**.*
+
+![API Ponto mensal](docs\api-ponto-mensal.png)
+
+![API Ponto relatório](docs\api-ponto-relatorio.png)
+
+5. **Segurança**: O sistema deve garantir que os dados dos usuários sejam armazenados de forma segura e que a privacidade seja mantida.
+
+>**SOLUÇÃO**: *Todas as API's, com exceção do login, requerem que o usuário esteja autenticado. A identificação do perfil do usuário está registrado no JWT, usuários com o perfil COLABORADOR podem acessar apenas os seus próprios lançamentos.*
+
+![JWT exemplo](docs\jwt.png)
+
+6. **Disponibilidade**: O sistema deve estar disponível 24/7 para permitir que os usuários registrem seu ponto a qualquer momento, e o tempo de resposta dos serviços de marcação de ponto deve ser de até 5 segundos.
+
+>**SOLUÇÃO**: *O sistema está hospedado na AWS, o que permite a disponibilidade 24/7 e a escalabilidade dos serviços de acordo com a demanda e horários previamente definidos.*
 
 ## Documentações
+
+### Desenho da solução MVP
+
+![ASIS MVP](docs/AWS_ASIS.drawio.png)
+
+### Desenho da solução evolutiva (fase 2)
 
 
 
@@ -42,6 +82,14 @@ enviar esse relatório por e-mail ao solicitante. (Listagem das datas, batimento
 2. Teste o sistema através do swagger:
 
    http://localhost:8000/swagger/index.html
+
+3. Usuários previamente cadastrados
+
+   * **Login**: 28507433057   **Perfil**: Administrador
+   * **Login**: 06997172059   **Perfil**: Colaborador
+   * **Login**: 02231416077   **Perfil**: Colaborador
+
+      `Todas as senhas são: 1234`
 
 ## Como rodar a aplicação na nuvem ▶️
 

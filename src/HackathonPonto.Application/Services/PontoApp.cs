@@ -64,14 +64,21 @@ namespace HackathonPonto.Application.Services
             return await _pontoRepository.GetMonthYearByUser(mes, ano, cpf);
         }
 
-        public void SendReportAsync(int mes, int ano, string cpf)
+        public async Task SendReportAsync(int mes, int ano, string cpf)
         {
             try
             {
+                
                 var result = _pontoRepository.GetReportMonthYearByUser(mes, ano, cpf);
+                
                 string arquivo = $"Ponto-{cpf}-{ano}-{mes}.pdf";
                 _report.GerarDocumento(arquivo, result);
-            }
+
+                var funcionario = _mapper.Map<FuncionarioViewModel>(await _funcionarioRepository.GetByCpf(cpf));
+
+                var email = new EmailService();
+                email.EnviarEmail(funcionario.Email, funcionario.Nome, arquivo);
+            }   
             catch (Exception e)
             {
                 throw new Exception(e.Message);
