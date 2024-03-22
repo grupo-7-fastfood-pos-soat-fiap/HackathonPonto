@@ -22,7 +22,7 @@ Este projeto é um sistema de ponto eletrônico. Seguindo os seguintes requisito
 3. Visualização de Registros: O sistema deve permitir que os usuários visualizem seus registros de ponto. Isso deve incluir todos os detalhes, como data, hora de entrada, intervalos e saída, e total de horas trabalhadas no dia.
 4. Relatórios: O sistema deve ser capaz de gerar o espelho de ponto mensal com base nos registros de ponto do mês fechado (anterior) e
 enviar esse relatório por e-mail ao solicitante. (Listagem das datas, batimentos de ponto e total de horas trabalhadas)
-5. Segurança: Osistemadevegarantirqueosdadosdosusuáriosse- jam armazenados de forma segura e que a privacidade seja mantida.
+5. Segurança: O sistema deve garantir que os dados dos usuários sejam armazenados de forma segura e que a privacidade seja mantida.
 6. Disponibilidade: O sistema deve estar disponível 24/7 para permitir que os usuários registrem seu ponto a qualquer momento, e o tempo de resposta dos serviços de marcação de ponto deve ser de até 5 segundos.
 
 ## Documentações
