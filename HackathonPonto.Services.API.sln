@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HackathonPonto.Infra.Data",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GenericPack", "src\GenericPack\GenericPack.csproj", "{4DA35260-1887-4C29-8C02-DE1C16F3CBB1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HackathonPonto.Services.Report", "src\HackathonPonto.Services.Report\HackathonPonto.Services.Report.csproj", "{24799208-5796-4104-90BE-5CF940065389}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{4DA35260-1887-4C29-8C02-DE1C16F3CBB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DA35260-1887-4C29-8C02-DE1C16F3CBB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DA35260-1887-4C29-8C02-DE1C16F3CBB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24799208-5796-4104-90BE-5CF940065389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24799208-5796-4104-90BE-5CF940065389}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24799208-5796-4104-90BE-5CF940065389}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24799208-5796-4104-90BE-5CF940065389}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -8,6 +8,7 @@ using HackathonPonto.Domain.Commands.FuncionarioCommands;
 using HackathonPonto.Domain.Commands.PontoCommands;
 using HackathonPonto.Domain.Interfaces;
 using HackathonPonto.Infra.Data.Repository;
+using Microsoft.AspNetCore.Http;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HackathonPonto.Application.Services
@@ -18,13 +19,15 @@ namespace HackathonPonto.Application.Services
         private readonly IFuncionarioRepository _funcionarioRepository;
         private readonly IMapper _mapper;
         private readonly IMediatorHandler _mediator;
+        private readonly IReportService _report;
 
-        public PontoApp(IPontoRepository pontoRepository, IFuncionarioRepository funcionarioRepository, IMediatorHandler mediator, IMapper mapper)
+        public PontoApp(IPontoRepository pontoRepository, IFuncionarioRepository funcionarioRepository, IReportService report, IMediatorHandler mediator, IMapper mapper)
         {
             _pontoRepository = pontoRepository;
             _funcionarioRepository = funcionarioRepository;
             _mediator = mediator;
             _mapper = mapper;
+            _report = report;
         }
         public async Task<CommandResult> Add(string cpf)
         {
@@ -59,6 +62,21 @@ namespace HackathonPonto.Application.Services
         public async Task<dynamic> GetMonthYearByUser(int mes, int ano, string cpf)
         {
             return await _pontoRepository.GetMonthYearByUser(mes, ano, cpf);
+        }
+
+        public void SendReportAsync(int mes, int ano, string cpf)
+        {
+            try
+            {
+                var result = _pontoRepository.GetReportMonthYearByUser(mes, ano, cpf);
+                string arquivo = $"Ponto-{cpf}-{ano}-{mes}.pdf";
+                _report.GerarDocumento(arquivo, result);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
     }    
 }

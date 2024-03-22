@@ -20,5 +20,6 @@
   <ProjectReference Include="..\HackathonPonto.Domain\HackathonPonto.Domain.csproj" />
   <ProjectReference Include="..\HackathonPonto.Infra.CrossCutting.Bus\HackathonPonto.Infra.CrossCutting.Bus.csproj" />
   <ProjectReference Include="..\HackathonPonto.Infra.Data\HackathonPonto.Infra.Data.csproj" />
+  <ProjectReference Include="..\HackathonPonto.Services.Report\HackathonPonto.Services.Report.csproj" />
 </ItemGroup>
 </Project>
