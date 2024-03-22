@@ -16,7 +16,7 @@ SOAP2 - Grupo 7
    * [Desenvolvedores <img class="emoji" title=":octocat:" alt=":octocat:" src="https://github.githubassets.com/images/icons/emoji/octocat.png" height="20" width="20" align="absmiddle">](#desenvolvedores-octocat)
 
 ## O projeto
-Este projeto é um sistema de ponto eletrônico. Seguindo os seguintes requisitos funcionais:
+Este projeto consiste um sistema de ponto eletrônico, seguindo os seguintes requisitos funcionais:
 1. Autenticação de Usuário: O sistema deve permitir que os usuários se autentiquem usando um nome de usuário ou matrícula e senha.
 2. Registro de Ponto: O sistema deve permitir que os usuários registrem o horário de entrada, intervalos e saída do trabalho. Isso deve incluir a data e a hora exatas do registro. O usuário apenas registra o evento, e o sistema obtém o horário do momento do registro.
 3. Visualização de Registros: O sistema deve permitir que os usuários visualizem seus registros de ponto. Isso deve incluir todos os detalhes, como data, hora de entrada, intervalos e saída, e total de horas trabalhadas no dia.
