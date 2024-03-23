@@ -18,10 +18,12 @@ namespace HackathonPonto.Services.API.Controllers
     public class PontoController : ApiController
     {
         private readonly IPontoApp _pontoApp;
+        private readonly IFuncionarioApp _funcionarioApp;
 
-        public PontoController(IPontoApp pontoApp)
+        public PontoController(IPontoApp pontoApp, IFuncionarioApp funcionarioApp)
         {
             _pontoApp = pontoApp;
+            _funcionarioApp = funcionarioApp;
         }
 
         [HttpPost]
@@ -166,7 +168,9 @@ namespace HackathonPonto.Services.API.Controllers
                 if (perfilLogado!.Value == "Colaborador" && cpfLogado.Value != cpf)
                     return StatusCode(StatusCodes.Status403Forbidden);
 
-                _pontoApp.SendReportAsync(mes, ano, cpf);
+                var funcionario = await _funcionarioApp.GetByCpf(cpf);
+
+                _pontoApp.SendReport(mes, ano, cpf, funcionario.Email, funcionario.Nome);
 
                 return Ok("Seu relatório foi solicitado, verifique seu e-mail.");
             }
