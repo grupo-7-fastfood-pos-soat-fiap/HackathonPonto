@@ -15,12 +15,12 @@ namespace HackathonPonto.Application.Services
 
                 // Set SMTP client with basic authentication
                 mySmtpClient.UseDefaultCredentials = false;
-                NetworkCredential basicAuthenticationInfo = new NetworkCredential("provisoriocurso@adsnetwork.com.br", "");
+                NetworkCredential basicAuthenticationInfo = new NetworkCredential("provisoriocurso@adsnetwork.com.br", "#GDGFDFG234234SDFSF44fff%%fdfgdfgxkwlWERcsdfs");
                 mySmtpClient.Credentials = basicAuthenticationInfo;
                 mySmtpClient.Port = 587;
 
                 // Add "from" and "to" mail addresses
-                MailAddress from = new MailAddress("provisoriocurso@adsnetwork.com.brr", "Grupo7 SOAT2");
+                MailAddress from = new MailAddress("provisoriocurso@adsnetwork.com.br", "Grupo7 SOAT2");
                 MailAddress to = new MailAddress(email, nome);
                 MailMessage myMail = new MailMessage(from, to);
 
