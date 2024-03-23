@@ -13,7 +13,15 @@
 
 ## O projeto
 
-Este projeto consiste um sistema de ponto eletrônico, seguindo os seguintes requisitos funcionais:
+Este projeto consiste no desenvolvimento de um MVP de sistema de ponto eletrônico, como projeto final da POSTECH FIAP - SOFTWARE ARCHITECTURE no formato de Hachathon proposto pelos professores Luiz Zenha, Erick Muller, José Rubens.
+
+## Documentações
+
+### Desenho da solução MVP
+
+![ASIS MVP](./docs/AWS_ASIS.drawio.png)
+
+**Requisitos funcionais MVP**
 
 1. **Autenticação de Usuário**: O sistema deve permitir que os usuários se autentiquem usando um nome de usuário ou matrícula e senha.
 
@@ -55,15 +63,27 @@ enviar esse relatório por e-mail ao solicitante. (Listagem das datas, batimento
 
 >**SOLUÇÃO**: *O sistema está hospedado na AWS, o que permite a disponibilidade 24/7 e a escalabilidade dos serviços de acordo com a demanda e horários previamente definidos.*
 
-## Documentações
-
-### Desenho da solução MVP
-
-![ASIS MVP](./docs/AWS_ASIS.drawio.png)
-
 ### Desenho da solução evolutiva (fase 2)
 
 ![TOBE](./docs/AWS_TOBE.drawio.png)
+
+**Requisitos funcionais versão evolutiva (fase 2)**
+
+1. **Edição de Registros**: Em caso de erros, o sistema deve permitir que os usuários editem seus registros de ponto. No entanto, essa funcionalidade deve ser restrita e possivelmente necessitar de aprovação de um supervisor.
+
+>**SOLUÇÃO**: *Nestes casos, o procedimento será a abertura de um chamado para concessão de autorização, todo funcionário precisará estar vinculado a um gestor que receberá a solicitação. Uma vez aprovada, o sistema permitirá a correção do registro.*
+
+3. **Notificações**: O sistema deve ser capaz de enviar notificações para lembrar os usuários de registrar seu ponto.
+
+>**SOLUÇÃO**: *Para o envio de notificações, a proposta é a criação de um serviço de notificação na AWS (SNS), que monitora os lançamentos efetuados pelos usuários e dispara as notificações de acordo com as regras previamente definidas. Permitindo o envio de e-mails, sms e push.*
+   
+5. **Administração**: Deve haver uma interface de administração para gerenciar usuários, aprovar edições de registros e visualizar relatórios.
+
+>**SOLUÇÃO**: *Atualmente a utilização de perfis de usuários já permite segregar e controlar os acessos às API's e relatórios, para evolução do sistema, a proposta é a criação de um processo adicional para aprovar a edição de registros considerados críticos e que, por isso, dependem de uma supervisão.*
+
+7. **Relatórios**: O sistema deve ser capaz de gerar os relatórios com visão administrativa, para uso dos gestores.
+
+>**SOLUÇÃO**: *Serviços específicos aos perfis de gestão, como os relatórios de produtividade, de ocorrências e/ou de auditoria, terão acesso restrito aos perfis de Administrador e Gerente de RH (novo perfil).*
 
 ## Pré-requisitos
 
